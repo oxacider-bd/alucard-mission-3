@@ -2,46 +2,121 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>[PHASE_03]: CORE_ACCESS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[PHASE_03]: ENCRYPTED_TERMINAL</title>
     <style>
-        body { background: #000; color: #0f0; font-family: 'Courier New', monospace; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .login-box { border: 1px solid #0f0; padding: 40px; text-align: center; box-shadow: 0 0 20px #0f0; }
-        input { background: #000; border: 1px solid #0f0; color: #0f0; padding: 10px; margin: 10px; width: 250px; text-align: center; }
-        button { background: #0f0; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; }
-        .hint { font-size: 12px; color: #555; margin-top: 20px; }
+        body {
+            background-color: #000;
+            color: #00ff41;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .login-container {
+            width: 400px;
+            padding: 30px;
+            border: 1px solid #00ff41;
+            background: rgba(0, 5, 0, 0.9);
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.2);
+            text-align: center;
+        }
+
+        h2 { font-size: 18px; margin-bottom: 20px; letter-spacing: 2px; }
+
+        input {
+            background: #000;
+            border: 1px solid #00ff41;
+            color: #00ff41;
+            padding: 10px;
+            width: 80%;
+            margin-bottom: 20px;
+            text-align: center;
+            outline: none;
+        }
+
+        button {
+            background: #00ff41;
+            color: #000;
+            border: none;
+            padding: 10px 25px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        button:hover { background: #fff; box-shadow: 0 0 10px #fff; }
+
+        #response-msg {
+            margin-top: 20px;
+            font-size: 13px;
+            min-height: 20px;
+        }
+
+        .status-dot {
+            height: 8px;
+            width: 8px;
+            background-color: #ff0000;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
     </style>
 </head>
 <body>
-    <div class="login-box">
-        <h2>CENTRAL DATABASE ACCESS</h2>
-        <p>Enter the Phase 2 Key to bypass:</p>
-        <input type="text" id="passkey" placeholder="ENTER KEY HERE">
+
+    <div class="login-container">
+        <div class="warning" style="color: #ff0000; font-size: 12px; margin-bottom: 10px;">[ SYSTEM_LOCKED ]</div>
+        <h2>DATABASE GATEWAY 03</h2>
+        <p style="font-size: 12px; color: #888;">Input the 10-digit sequence found at Akihabara Node</p>
+        
+        <input type="text" id="access-key" placeholder="XX-XXXX-XXXX" autocomplete="off">
         <br>
-        <button onclick="checkKey()">ACCESS SYSTEM</button>
-        <p id="msg"></p>
-        <div class="hint">"System Log: Only the ones who look at the script can fix the broken path."</div>
+        <button onclick="validateEntry()">Authenticate</button>
+
+        <div id="response-msg">
+            <span class="status-dot"></span> <span id="status-text">Waiting for Input...</span>
+        </div>
     </div>
 
     <script>
-        function checkKey() {
-            var key = document.getElementById("passkey").value;
-            // The logic is simple, but the next destination is hidden in the comments below.
-            if (key === "ALU_STRIKE_99") {
-                document.getElementById("msg").innerHTML = "ACCESS GRANTED. Scanning for Phase 4...";
-                setTimeout(function() {
-                    alert("System Redirecting to Encrypted Storage...");
+        function validateEntry() {
+            const inputKey = document.getElementById("access-key").value.trim();
+            const statusText = document.getElementById("status-text");
+            const statusDot = document.querySelector(".status-dot");
+
+            // মামা, এখানে পাসওয়ার্ড সেট করে দিলাম (হাইফেনসহ এবং ছাড়া দুটোই কাজ করবে)
+            const secretKey = "0120-915-047";
+            const secretKeyPlain = "0120915047";
+
+            if (inputKey === secretKey || inputKey === secretKeyPlain) {
+                statusDot.style.backgroundColor = "#00ff41";
+                statusText.innerText = "ACCESS GRANTED. DECRYPTING DATA...";
+                statusText.style.color = "#00ff41";
+                
+                setTimeout(() => {
+                    alert("SUCCESS: You have breached the central node.");
+                    // মামা, এখানে তোর ৪ নম্বর মিশনের লিঙ্কটা বসিয়ে দিবি যখন আমরা ওটা বানাবো।
+                    window.location.href = "https://oxacider-bd.github.io/alucard-mission-4/"; 
                 }, 2000);
             } else {
-                document.getElementById("msg").innerHTML = "INVALID KEY. SYSTEM ALERTED.";
+                statusDot.style.backgroundColor = "#ff0000";
+                statusText.innerText = "INVALID KEY. UNAUTHORIZED ATTEMPT.";
+                statusText.style.color = "#ff0000";
             }
         }
-
-        /* ---------------------------------------------------------
-        DEV_NOTE: The redirect module is disabled. 
-        Manual override required. 
-        Next Destination: https://oxacider-bd.github.io/the-mini-game/
-        ---------------------------------------------------------
-        */
     </script>
 </body>
 </html>
