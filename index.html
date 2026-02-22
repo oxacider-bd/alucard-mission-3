@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>[PHASE_03]: CORE_ACCESS</title>
+    <style>
+        body { background: #000; color: #0f0; font-family: 'Courier New', monospace; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .login-box { border: 1px solid #0f0; padding: 40px; text-align: center; box-shadow: 0 0 20px #0f0; }
+        input { background: #000; border: 1px solid #0f0; color: #0f0; padding: 10px; margin: 10px; width: 250px; text-align: center; }
+        button { background: #0f0; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; }
+        .hint { font-size: 12px; color: #555; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <h2>CENTRAL DATABASE ACCESS</h2>
+        <p>Enter the Phase 2 Key to bypass:</p>
+        <input type="text" id="passkey" placeholder="ENTER KEY HERE">
+        <br>
+        <button onclick="checkKey()">ACCESS SYSTEM</button>
+        <p id="msg"></p>
+        <div class="hint">"System Log: Only the ones who look at the script can fix the broken path."</div>
+    </div>
+
+    <script>
+        function checkKey() {
+            var key = document.getElementById("passkey").value;
+            // The logic is simple, but the next destination is hidden in the comments below.
+            if (key === "ALU_STRIKE_99") {
+                document.getElementById("msg").innerHTML = "ACCESS GRANTED. Scanning for Phase 4...";
+                setTimeout(function() {
+                    alert("System Redirecting to Encrypted Storage...");
+                }, 2000);
+            } else {
+                document.getElementById("msg").innerHTML = "INVALID KEY. SYSTEM ALERTED.";
+            }
+        }
+
+        /* ---------------------------------------------------------
+        DEV_NOTE: The redirect module is disabled. 
+        Manual override required. 
+        Next Destination: https://oxacider-bd.github.io/the-mini-game/
+        ---------------------------------------------------------
+        */
+    </script>
+</body>
+</html>
